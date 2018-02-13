@@ -101,7 +101,12 @@ class Game
 
     def guessed_letter
       puts "Please pick a letter (a-z). Your attempts_left are #{@attempts_left}"
-       letter = gets.chomp
+       letter = gets.chomp.downcase
+      until letter =~ /^[a-zA_Z\s]$/
+        puts "That is not a letter!".red
+         puts "Please pick a letter (a-z). Your attempts_left are #{@attempts_left}"
+          letter = gets.chomp.downcase
+      end
        return letter
     end
 
