@@ -21,5 +21,15 @@ class Game
       return Faker::Science.element
     end
   end
+
+  def create_board
+    word_size = @word.length
+    @board = "-" * word_size
+  end
+
+  def display_board
+    show_flower
+    puts @board
+  end
 end
 game = Game.new
