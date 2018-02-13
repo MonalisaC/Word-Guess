@@ -97,6 +97,12 @@ class Game
       """.red
     end
   end
+
+    def guessed_letter
+      puts "Please pick a letter (a-z). Your attempts_left are #{@attempts_left}"
+      return guessed_letter = gets.chomp
+    end
+
     def play_game
       theme = pick_theme
       @word = get_theme_word theme
