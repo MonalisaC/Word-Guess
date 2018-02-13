@@ -11,5 +11,15 @@ class Game
     @themes = [ "music", "food", "science" ]
   end
 
+  def get_theme_word theme
+    case theme
+    when "music"
+      return Faker::Music.instrument
+    when "food"
+      return Faker::Food.ingredient
+    when "science"
+      return Faker::Science.element
+    end
+  end
 end
 game = Game.new
