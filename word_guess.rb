@@ -8,14 +8,20 @@ class Game
     @word = ""
     @board = ""
     @attempts_left = 5
-    @themes = [ "music", "food", "science" ]
+    @themes = [ "music", "color", "science" ]
     @used_letters_array = []
   end
 
   def pick_theme
     puts "Choose theme:"
     puts @themes
-    chosen_theme = gets.chomp
+    chosen_theme = gets.chomp.downcase
+    until chosen_theme == @themes[0] || chosen_theme == @themes[1] || chosen_theme == @themes[2]
+      puts "That is not valid!".red
+      puts "Choose theme:"
+      puts @themes
+      chosen_theme = gets.chomp
+    end
     return chosen_theme
   end
 
@@ -23,8 +29,8 @@ class Game
     case theme
     when "music"
       return Faker::Music.instrument
-    when "food"
-      return Faker::Food.ingredient
+    when "color"
+      return Faker::Color.color_name
     when "science"
       return Faker::Science.element
     end
@@ -154,15 +160,25 @@ class Game
         end
         check_win
       end
-      puts "Sorry, no more attempts left. It was #{@word}".blue
+      puts "Sorry, no more attempts left. You lost :(. It was #{@word}".blue
     end
 
     def check_win
       if @board == @word
-        puts "Yay! you win.".bold
+        puts "Yay! you win :).".bold
         exit
       end
     end
 end
-game = Game.new
-game.play_game
+
+class Player
+  attr_reader :name
+
+  def initialize name
+    @name = name
+    puts "Are you game #{@name}!".bold
+
+  end
+end
+game_instance = Game.new
+game_instance.play_game
