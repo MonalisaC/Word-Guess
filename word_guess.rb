@@ -124,6 +124,10 @@ class Game
       @board = board_split.join
     end
 
+    def include_letter letter_guessed
+      return used_letters_array.include?letter_guessed
+    end
+
     def play_game
       theme = pick_theme
       @word = get_theme_word theme
@@ -134,12 +138,12 @@ class Game
         if match_letter(letter_guessed)
           puts "Right guess"
           update_board(letter_guessed)
-          if used_letters_array.include?letter_guessed
+          if include_letter(letter_guessed)
             puts "You have already tried this letter. Used letters: #{@used_letters_array.join(", ")}".red
           end
           used_letters_array << letter_guessed
         else
-          if used_letters_array.include?letter_guessed
+          if include_letter(letter_guessed)
             puts "You have already tried this letter. Used letters: #{@used_letters_array.join(", ")}".red
           else
             used_letters_array << letter_guessed
