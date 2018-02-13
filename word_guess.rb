@@ -122,20 +122,20 @@ class Game
       theme = pick_theme
       @word = get_theme_word theme
       create_board
-    #   until @attempts_left == 0
-    #     display_board
-    #     letter_guessed = guessed_letter
-    #     if match_letter(letter_guessed)
-    #       puts "Right guess"
-    #       update_board(letter_guessed)
-    #     else
-    #       @attempts_left -= 1
-    #       puts "Sorry! wrong guess"
-    #     end
-    #     check_win
-    #   end
-    #   puts "Sorry, no more attempts left. It was #{@word}"
-    # end
+      until @attempts_left == 0
+        display_board
+        letter_guessed = guessed_letter
+        if match_letter(letter_guessed)
+          puts "Right guess"
+          update_board(letter_guessed)
+        else
+          @attempts_left -= 1
+          puts "Sorry! wrong guess"
+        end
+        check_win
+      end
+      puts "Sorry, no more attempts left. It was #{@word}"
+    end
 
     def check_win
       if @board == @word
@@ -145,3 +145,4 @@ class Game
     end
 end
 game = Game.new
+game.play
