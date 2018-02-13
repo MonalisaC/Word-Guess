@@ -2,9 +2,10 @@ require 'faker'
 require 'colorize'
 
 class Game
-  attr_accessor :word, :board, :attempts, :themes, :used_letters_array
+  attr_accessor :word, :board, :attempts, :themes, :used_letters_array, :player
 
-  def initialize
+  def initialize player
+    @player = player
     @word = ""
     @board = ""
     @attempts_left = 5
@@ -172,13 +173,14 @@ class Game
 end
 
 class Player
-  attr_reader :name
+  attr_accessor :name
 
   def initialize name
     @name = name
-    puts "Are you game #{@name}!".bold
-
+    puts "Are you game #{@name}!".bold.blue.on_white.blink
   end
 end
-game_instance = Game.new
+
+player_instance = Player.new("Anonymous11")
+game_instance = Game.new(player_instance)
 game_instance.play_game
