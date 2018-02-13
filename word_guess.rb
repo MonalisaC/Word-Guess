@@ -39,6 +39,64 @@ class Game
     puts @board
   end
 
+  def show_flower
+    case @attempts_left
+    when 5
+      puts """
+      (@)(@)(@)(@)(@)
+        ,\,\,|,/,/,
+           _\|/_
+          |_____|
+           |   |
+           |___|
+      """.yellow
+    when 4
+      puts """
+      (@)(@)(@)(@)
+       ,\,\,|,/,/,
+          _\|/_
+         |_____|
+          |   |
+          |___|
+      """.magenta
+    when 3
+      puts """
+       (@)(@)(@)
+      ,\,\,|,/,/,
+       _\|/_
+      |_____|
+       |   |
+       |___|
+      """.green
+    when 2
+      puts """
+       (@)(@)
+    ,\,\,|,/,/,
+       _\|/_
+      |_____|
+       |   |
+       |___|
+      """.blue
+    when 1
+      puts """
+        (@)
+      ,\,\,|,/,/,
+         _\|/_
+        |_____|
+         |   |
+         |___|
+      """.light_red
+    when 0
+      puts """
+      Game Over
+        ,\,\,|,/,/,
+           _\|/_
+          |_____|
+           |   |
+           |___|
+      """.red
+    end
+  end
     def play_game
       theme = pick_theme
       @word = get_theme_word theme
