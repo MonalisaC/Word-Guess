@@ -2,7 +2,7 @@ require 'faker'
 require 'colorize'
 
 class Game
-  attr_reader :word, :board, :attempts, :themes
+  attr_accessor :word, :board, :attempts, :themes
 
   def initialize
     @word = ""
@@ -100,17 +100,48 @@ class Game
 
     def guessed_letter
       puts "Please pick a letter (a-z). Your attempts_left are #{@attempts_left}"
-      return guessed_letter = gets.chomp
+       letter = gets.chomp
+       return letter
     end
 
-    def match_letter
-      return @word.include?guessed_letter
+    def match_letter letter_guessed
+      return @word.downcase.include?letter_guessed
     end
+
+    def update_board letter_guessed
+      # @word.split("").each_index
+      word_split = @word.split("")
+      get_word_index = word_split.each_index.select {|index| word_split[index].downcase == letter_guessed}
+      # @board.split("").each_index{}
+      board_split = @board.split("")
+      get_word_index.each {|index_element| board_split[index_element] = word_split [index_element]}
+      @board = board_split.join
+    end
+
     def play_game
       theme = pick_theme
       @word = get_theme_word theme
       create_board
-    end
+    #   until @attempts_left == 0
+    #     display_board
+    #     letter_guessed = guessed_letter
+    #     if match_letter(letter_guessed)
+    #       puts "Right guess"
+    #       update_board(letter_guessed)
+    #     else
+    #       @attempts_left -= 1
+    #       puts "Sorry! wrong guess"
+    #     end
+    #     check_win
+    #   end
+    #   puts "Sorry, no more attempts left. It was #{@word}"
+    # end
 
+    def check_win
+      if @board == @word
+        puts "Yay! you win."
+        exit
+      end
+    end
 end
 game = Game.new
