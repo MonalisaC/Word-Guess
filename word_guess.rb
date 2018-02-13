@@ -38,5 +38,12 @@ class Game
     show_flower
     puts @board
   end
+
+    def play_game
+      theme = pick_theme
+      @word = get_theme_word theme
+      create_board
+    end
+
 end
 game = Game.new
