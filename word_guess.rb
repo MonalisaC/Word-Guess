@@ -2,13 +2,14 @@ require 'faker'
 require 'colorize'
 
 class Game
-  attr_accessor :word, :board, :attempts, :themes
+  attr_accessor :word, :board, :attempts, :themes, :used_letters_array
 
   def initialize
     @word = ""
     @board = ""
     @attempts_left = 5
     @themes = [ "music", "food", "science" ]
+    @used_letters_array = []
   end
 
   def pick_theme
@@ -128,21 +129,30 @@ class Game
         if match_letter(letter_guessed)
           puts "Right guess"
           update_board(letter_guessed)
+          if used_letters_array.include?letter_guessed
+            puts "You have already tried this letter. Used letters: #{@used_letters_array.join(", ")}".red
+          end
+          used_letters_array << letter_guessed
         else
-          @attempts_left -= 1
-          puts "Sorry! wrong guess"
+          if used_letters_array.include?letter_guessed
+            puts "You have already tried this letter. Used letters: #{@used_letters_array.join(", ")}".red
+          else
+            used_letters_array << letter_guessed
+            @attempts_left -= 1
+             puts "Sorry! wrong guess"
+          end
         end
         check_win
       end
-      puts "Sorry, no more attempts left. It was #{@word}"
+      puts "Sorry, no more attempts left. It was #{@word}".blue
     end
 
     def check_win
       if @board == @word
-        puts "Yay! you win."
+        puts "Yay! you win.".bold
         exit
       end
     end
 end
 game = Game.new
-game.play
+game.play_game
