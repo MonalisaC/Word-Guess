@@ -11,6 +11,13 @@ class Game
     @themes = [ "music", "food", "science" ]
   end
 
+  def pick_theme
+    puts "Choose theme:"
+    puts @themes
+    chosen_theme = gets.chomp
+    return chosen_theme
+  end
+
   def get_theme_word theme
     case theme
     when "music"
