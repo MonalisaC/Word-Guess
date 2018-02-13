@@ -103,6 +103,9 @@ class Game
       return guessed_letter = gets.chomp
     end
 
+    def match_letter
+      return @word.include?guessed_letter
+    end
     def play_game
       theme = pick_theme
       @word = get_theme_word theme
