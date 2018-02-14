@@ -13,18 +13,6 @@ class Game
     @used_letters_array = []
   end
 
-  def pick_theme
-    puts "Choose theme:"
-    puts @themes
-    chosen_theme = gets.chomp.downcase
-    until chosen_theme == @themes[0] || chosen_theme == @themes[1] || chosen_theme == @themes[2]
-      puts "That is not valid!".red
-      puts "Choose theme:"
-      puts @themes
-      chosen_theme = gets.chomp
-    end
-    return chosen_theme
-  end
 
   def get_theme_word theme
     case theme
@@ -142,7 +130,7 @@ class Game
     end
 
     def play_game
-      theme = pick_theme
+      theme = @player.pick_theme(@themes)
       @word = get_theme_word theme
       create_board
       until @attempts_left == 0
@@ -155,12 +143,15 @@ class Game
           used_letters_array << letter_guessed
         else
            display_letter letter_guessed
-           used_letters_array << letter_guessed
+           if !include_letter letter_guessed
+             used_letters_array << letter_guessed
             @attempts_left -= 1
+          end
             puts "Sorry! wrong guess"
         end
         check_win
       end
+      show_flower
       puts "Sorry, no more attempts left. You lost :(. It was #{@word}".blue
     end
 
@@ -179,6 +170,20 @@ class Player
     @name = name
     puts "Are you game #{@name}!".bold.blue.on_white.blink
   end
+
+  def pick_theme themes
+    puts "Choose theme:"
+    puts themes
+    chosen_theme = gets.chomp.downcase
+    until chosen_theme == themes[0] || chosen_theme == themes[1] || chosen_theme == themes[2]
+      puts "That is not valid!".red
+      puts "Choose theme:"
+      puts themes
+      chosen_theme = gets.chomp
+    end
+    return chosen_theme
+  end
+
 end
 
 player_instance = Player.new("Anonymous11")
