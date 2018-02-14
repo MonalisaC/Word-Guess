@@ -36,6 +36,7 @@ class Game
   end
 
   def show_flower
+    puts "Used letters: #{@used_letters_array.join(", ")}".bold
     case @attempts_left
     when 5
       puts """
@@ -94,16 +95,6 @@ class Game
     end
   end
 
-    def guessed_letter
-      puts "Please pick a letter (a-z). Your attempts_left are #{@attempts_left}"
-       letter = gets.chomp.downcase
-      until letter =~ /^[a-zA_Z\s]$/
-        puts "That is not a letter!".red
-         puts "Please pick a letter (a-z). Your attempts_left are #{@attempts_left}"
-          letter = gets.chomp.downcase
-      end
-       return letter
-    end
 
     def match_letter letter_guessed
       return @word.downcase.include?letter_guessed
@@ -125,7 +116,7 @@ class Game
 
     def display_letter letter_guessed
         if include_letter letter_guessed
-        puts "You have already tried this letter. Used letters: #{@used_letters_array.join(", ")}".red
+        puts "You have already tried this letter. Used letters.".red
       end
     end
 
@@ -135,9 +126,9 @@ class Game
       create_board
       until @attempts_left == 0
         display_board
-        letter_guessed = guessed_letter
+        letter_guessed = @player.guessed_letter(@attempts_left)
         if match_letter(letter_guessed)
-          puts "Right guess"
+          puts "Right guess! :)".magenta
           update_board(letter_guessed)
           display_letter letter_guessed
           used_letters_array << letter_guessed
@@ -183,6 +174,18 @@ class Player
     end
     return chosen_theme
   end
+
+  def guessed_letter attempts_left
+    puts "Please pick a letter (a-z). Your attempts_left are #{attempts_left}"
+     letter = gets.chomp.downcase
+    until letter =~ /^[a-zA_Z\s]$/
+      puts "That is not a letter!".red
+       puts "Please pick a letter (a-z). Your attempts_left are #{attempts_left}"
+        letter = gets.chomp.downcase
+    end
+     return letter
+  end
+
 
 end
 
